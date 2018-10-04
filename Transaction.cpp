@@ -1,10 +1,10 @@
 #include "Transaction.h"
 #include <cstdlib>
-#include <openssl/sha.h>
+#include "sha256.h"
 
 // non-member functions
 
-std::string makeNonce() {			// make a random length 3 Nonce string
+std::string makeNonce() {					// make a random length 3 Nonce string
 	std::string answer = "";
 	for (int i=0; i<3; i++) {
 		answer += char(rand()%26 + 97);

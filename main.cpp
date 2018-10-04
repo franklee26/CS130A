@@ -1,14 +1,13 @@
 #include "Transaction.h"
+#include "sha256.h"
 using namespace std; 
 
 int main() {
 
-	std::string answer = "";
-	for (int i=0; i<3; i++) {
-		answer += char(rand()%26 + 97);
-	}
+	string input = "oka";
+	string output = sha256(input);
 
-	cout<<answer<<endl;
+	cout<<output<<endl;
 
 	return 0;
 }

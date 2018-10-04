@@ -2,7 +2,13 @@
 using namespace std; 
 
 int main() {
-  cout<<"Test!"<<endl;
 
-  return 0;
+	std::string answer = "";
+	for (int i=0; i<3; i++) {
+		answer += char(rand()%26 + 97);
+	}
+
+	cout<<answer<<endl;
+
+	return 0;
 }

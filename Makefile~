@@ -1,4 +1,7 @@
 CXX = g++ -std=c++11
 
-main: transaction.o main.o
-	${CXX} $^ -o $@
+main: Transaction.o main.o
+	${CXX} $^ -o $@ -lssl -lcrypto
+
+clean:
+	rm -f *.o main

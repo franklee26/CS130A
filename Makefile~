@@ -1,0 +1,4 @@
+CXX = g++ -std=c++11
+
+main: transaction.o main.o
+	${CXX} $^ -o $@

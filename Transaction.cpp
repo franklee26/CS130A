@@ -6,6 +6,7 @@
 
 std::string makeNonce() {					// make a random length 3 Nonce string
 	std::string answer = "";
+	srand(time(NULL));
 	for (int i=0; i<3; i++) {
 		answer += char(rand()%26 + 97);
 	}
@@ -21,6 +22,11 @@ Transaction::Transaction(int amount) {
 	this->nonce = "";
 	this->hash = "";
 	this->next = NULL;
+}
+
+Transaction::Transaction(int amount, std::string sender, std::string receiver) {
+	this->sender = sender;
+	this->receiver = receiver;
 }
 
 Transaction::Transaction(int amount, std::string sender, std::string receiver, 
@@ -49,12 +55,47 @@ void Transaction::setNonce(std::string nonce) {
 	this->nonce = nonce;
 }
 
+void Transaction::setNonce() {
+	this->nonce = makeNonce();
+}
+
 void Transaction::setHash(std::string hash) {
+	size_t lastIndex = hash.find_last_of(hash);
+	if (hash[lastIndex] != '0' && hash[lastIndex] != '1' && hash[lastIndex] != '2'
+		&& hash[lastIndex] != '3' && hash[lastIndex] != '4') {
+		std::cout<<"Invalid hash: last digit must be 0-4."<<std::endl;
+		return;
+	}
 	this->hash = hash;
 }
 
 void Transaction::setHash() {
-	;
+	// I need to make a nonce first
+	if (this->nonce == "") {
+		std::cout<<"Detected empty nonce. Filling empty nonce with generated nonce..."<<std::endl;
+		this->nonce = makeNonce();
+	}
+	if (this->sender == "" || this->receiver == "") {
+		std::cout<<"Error: Need sender and receiver. Exiting."<<std::endl;
+		return; 
+	}
+	// first I need to actually make a hash
+	std::string key = std::to_string(this->amount) + this->sender + 
+	this->receiver + this->nonce;
+	// encrypt it
+	std::string ENCRYPTED = sha256(key);
+	// now I need to ensure that the last char in this key is a digit 0-4
+	size_t lastIndex = ENCRYPTED.find_last_of(ENCRYPTED);
+	while (ENCRYPTED[lastIndex] != '0' && ENCRYPTED[lastIndex] != '1' && ENCRYPTED[lastIndex] != '2'
+		&& ENCRYPTED[lastIndex] != '3' && ENCRYPTED[lastIndex] != '4') {
+		//std::cout<<"MAKING NEW NONCE. REPLACE: "<<ENCRYPTED[lastIndex]<<std::endl;
+		this->nonce = makeNonce();		// make a new nonce
+		key = std::to_string(this->amount) + this->sender + 
+			this->receiver + this->nonce;
+		ENCRYPTED = sha256(key);
+	}
+	std::cout<<"Done. Successfully generated viable SHA256 hash."<<std::endl;
+	this->hash = ENCRYPTED;
 }
 
 void Transaction::setNext(Transaction* next) {

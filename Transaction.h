@@ -16,7 +16,7 @@ public:
 	// constructors
 
 	Transaction(int amount);
-
+	Transaction(int amount, std::string sender, std::string receiver);
 	Transaction(int amount, std::string sender, std::string receiver, 
 		std::string nonce, std::string hash, Transaction* next);
 
@@ -26,6 +26,7 @@ public:
 	void setSender(std::string sender);
 	void setReceiver(std::string receiver);
 	void setNonce(std::string nonce);
+	void setNonce();							// set nonce using in-built alg
 	void setHash(std::string hash);				// set hash provided the hash
 	void setHash();								// set hash using in-built alg.
 	void setNext(Transaction* next);

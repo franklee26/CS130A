@@ -1,4 +1,4 @@
-# Frank's CS130A Project 1 Repo
+# Frank's CS130A Project 1: BlockChain
 ##### Emails: franklee@umail.ucsb.edu 
 ##### Last updated: 6/10
 

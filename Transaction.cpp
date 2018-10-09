@@ -22,21 +22,24 @@ Transaction::Transaction(int amount) {
 	this->nonce = "";
 	this->hash = "";
 	this->next = NULL;
+	this->isHeadCheck = false;
 }
 
 Transaction::Transaction(int amount, std::string sender, std::string receiver) {
 	this->sender = sender;
 	this->receiver = receiver;
+	this->isHeadCheck = false;
 }
 
 Transaction::Transaction(int amount, std::string sender, std::string receiver, 
-		std::string nonce, std::string hash, Transaction* next) {
+		std::string nonce, std::string hash, Transaction* next, bool isHeadCheck) {
 	this->amount = amount;
 	this->sender = sender;
 	this->receiver = receiver;
 	this->nonce = nonce;
 	this->hash = hash;
 	this->next = next;
+	this->isHeadCheck = isHeadCheck;
 }
 
 void Transaction::setAmount(int amount) {
@@ -102,6 +105,10 @@ void Transaction::setNext(Transaction* next) {
 	this->next = next;
 }
 
+void Transaction::setHead(bool isHeadCheck) {
+	this->isHeadCheck = isHeadCheck;
+}
+
 int Transaction::getAmount() {
 	return amount;
 }
@@ -120,4 +127,8 @@ std::string Transaction::getHash() {
 
 Transaction* Transaction::getNext() {
 	return next;
+}
+
+bool Transaction::isHead() {
+	return this->isHeadCheck;
 }

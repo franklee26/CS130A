@@ -12,13 +12,14 @@ private:
 	std::string receiver;	// receiver of the money
 	std::string nonce;		// random string used for crypto. hashing
 	std::string hash;		// hash of the previous transaction, left empty if node head
+	bool isHeadCheck;		// indicator if this transaction is head (defaults to false)
 public:
 	// constructors
 
 	Transaction(int amount);
 	Transaction(int amount, std::string sender, std::string receiver);
 	Transaction(int amount, std::string sender, std::string receiver, 
-		std::string nonce, std::string hash, Transaction* next);
+		std::string nonce, std::string hash, Transaction* next, bool isHeadCheck);
 
 	// methods
 
@@ -30,6 +31,7 @@ public:
 	void setHash(std::string hash);				// set hash provided the hash
 	void setHash();								// set hash using in-built alg.
 	void setNext(Transaction* next);
+	void setHead(bool isHeadCheck);				// sets current transaction as the head
 
 	// getters
 
@@ -39,6 +41,7 @@ public:
 	std::string getNonce();
 	std::string getHash();
 	Transaction* getNext();
+	bool isHead();
 };
 
 #endif

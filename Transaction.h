@@ -29,7 +29,7 @@ public:
 	void setNonce(std::string nonce);
 	void setNonce();							// set nonce using in-built alg
 	void setHash(std::string hash);				// set hash provided the hash
-	// void setHash();								// set hash using in-built alg.
+	// void setHash();							// set hash using in-built alg.
 	void setNext(Transaction* next);
 	void setHead(bool isHeadCheck);				// sets current transaction as the head
 
@@ -39,8 +39,8 @@ public:
 	std::string getSender();
 	std::string getReceiver();
 	std::string getNonce();
-	std::string getHashForThis();
-	std::string getSetHash();
+	std::string getHashForThis();				// this auto generates a viable nonce as well
+	std::string getSetHash();					
 	Transaction* getNext();
 	bool isHead();
 };

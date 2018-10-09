@@ -13,6 +13,7 @@ public:
 
 	// methods
 	void insertTransaction(Transaction* node);		// inserts transaction
+	void printChain();								// prints the blockchain, despite any errors
 
 	// getters
 	bool verifyChain();								// returns true if verified

@@ -20,15 +20,16 @@ Transaction::Transaction(int amount) {
 	this->sender = "";
 	this->receiver = "";
 	this->nonce = "";
-	this->hash = "";
+	this->hash = "NULL";
 	this->next = NULL;
-	this->isHeadCheck = false;
+	this->isHeadCheck = true;
 }
 
 Transaction::Transaction(int amount, std::string sender, std::string receiver) {
 	this->sender = sender;
 	this->receiver = receiver;
-	this->isHeadCheck = false;
+	this->isHeadCheck = true;
+	this->hash = "NULL";
 }
 
 Transaction::Transaction(int amount, std::string sender, std::string receiver, 
@@ -72,7 +73,7 @@ void Transaction::setHash(std::string hash) {
 	this->hash = hash;
 }
 
-void Transaction::setHash() {
+std::string Transaction::getHashForThis() {
 	// I need to make a nonce first
 	if (this->nonce == "") {
 		std::cout<<"Detected empty nonce. Filling empty nonce with generated nonce..."<<std::endl;
@@ -80,7 +81,7 @@ void Transaction::setHash() {
 	}
 	if (this->sender == "" || this->receiver == "") {
 		std::cout<<"Error: Need sender and receiver. Exiting."<<std::endl;
-		return; 
+		exit(1); 
 	}
 	// first I need to actually make a hash
 	std::string key = std::to_string(this->amount) + this->sender + 
@@ -98,7 +99,12 @@ void Transaction::setHash() {
 		ENCRYPTED = sha256(key);
 	}
 	std::cout<<"Done. Successfully generated viable SHA256 hash."<<std::endl;
-	this->hash = ENCRYPTED;
+	//this->hash = ENCRYPTED;
+	return ENCRYPTED;
+}
+
+std::string Transaction::getSetHash() {
+	return this->hash;
 }
 
 void Transaction::setNext(Transaction* next) {
@@ -117,13 +123,17 @@ std::string Transaction::getSender() {
 	return sender;
 }
 
+std::string Transaction::getReceiver() {
+	return receiver;
+}
+
 std::string Transaction::getNonce() {
 	return nonce;
 }
 
-std::string Transaction::getHash() {
-	return hash;
-}
+// std::string Transaction::getHash() {
+// 	return hash;
+// }
 
 Transaction* Transaction::getNext() {
 	return next;

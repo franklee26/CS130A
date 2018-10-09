@@ -1,5 +1,5 @@
 #include "Transaction.h"
-#include "sha256.h"
+#include "Blockchain.h"
 #include <string>
 using namespace std;
 
@@ -15,14 +15,29 @@ using namespace std;
 int main() {
 
 	Transaction* T = new Transaction(26);
-
 	T->setSender("Frank");
 	T->setReceiver("Emilia");
 
-	T->setHash();
-	string theHash = T->getHash();
-	cout<<theHash<<endl;
-	cout<<T->getNonce()<<endl;
+	Transaction* T1 = new Transaction(15);
+	T1->setSender("Elisabeth");
+	T1->setReceiver("Jacob");
+
+	Transaction* T2 = new Transaction(3);
+	T2->setSender("Bowie");
+	T2->setReceiver("Sailors");
+
+	Blockchain* B = new Blockchain(T);
+	B->insertTransaction(T1);
+	// mess up the hash
+	T1->setHash("sjdlk28qeuowad3");
+	B->insertTransaction(T2);
+
+	B->printChain();
+	if (B->verifyChain()) {
+		cout<<"Verified!!!"<<endl;
+	} else {
+		cout<<"Error!"<<endl;
+	}
 
 	return 0;
 }

@@ -2,6 +2,10 @@
 using namespace std;
 
 Blockchain::Blockchain(Transaction* head) {
+	if (head == NULL) {
+		cerr<<"head transaction can not be NULL. Please try again...";
+		exit(1);
+	}
 	this->head = head;
 }
 
@@ -38,6 +42,14 @@ bool Blockchain::verifyChain() {
 		if (copy->getNext() == NULL) {
 			// so I'm at the last transaction
 			if (copy->getSetHash() != "NULL") {
+				// now print this wrong transaction
+				cout<<"Error in the following head transaction: "<<endl;
+				cout<<"====="<<endl;
+				cout<<"SENDER: "<<copy->getSender()<<endl;
+				cout<<"RECEIVER: "<<copy->getReceiver()<<endl;
+				cout<<"AMOUNT: "<<copy->getAmount()<<endl;
+				cout<<"HASH: "<<copy->getSetHash()<<endl;
+				cout<<"====="<<endl;
 				return false;
 			}
 			return true;
@@ -47,14 +59,44 @@ bool Blockchain::verifyChain() {
 			// compare this to the generated hash from the previous transaction
 			string generatedPrevHash = (copy->getNext())->getHashForThis();
 			if (currentHash != generatedPrevHash) {
+				cout<<"Error between the following transaction: "<<endl;
+				cout<<"====="<<endl;
+				cout<<"SENDER: "<<copy->getSender()<<endl;
+				cout<<"RECEIVER: "<<copy->getReceiver()<<endl;
+				cout<<"AMOUNT: "<<copy->getAmount()<<endl;
+				cout<<"HASH: "<<copy->getSetHash()<<endl;
+				cout<<"====="<<endl;
+				cout<<"SENDER: "<<(copy->getNext())->getSender()<<endl;
+				cout<<"RECEIVER: "<<(copy->getNext())->getReceiver()<<endl;
+				cout<<"AMOUNT: "<<(copy->getNext())->getAmount()<<endl;
+				cout<<"HASH: "<<(copy->getNext())->getSetHash()<<endl;
+				cout<<"====="<<endl;
 				return false;
 			}
 		}
 		copy = copy->getNext();
 	}
+	// by the time I get here, the chain has been verified!
 	return true;
 }	
 
 bool Blockchain::findTransaction(string sender) {
-	return false;
+	bool found = false;
+	Transaction* copy = this->head;
+	while (copy != NULL) {
+		if (copy->getSender() == sender) {
+			found = true;
+			cout<<endl;
+			cout<<"Found transaction match: "<<endl;
+			cout<<"====="<<endl;
+			cout<<"SENDER: "<<copy->getSender()<<endl;
+			cout<<"RECEIVER: "<<copy->getReceiver()<<endl;
+			cout<<"AMOUNT: "<<copy->getAmount()<<endl;
+			cout<<"HASH: "<<copy->getSetHash()<<endl;
+			cout<<"====="<<endl;
+			cout<<endl;
+		}
+		copy = copy->getNext();
+	}
+	return found;
 }

@@ -26,15 +26,29 @@ int main() {
 	T2->setSender("Bowie");
 	T2->setReceiver("Sailors");
 
+	Transaction* T3 = new Transaction(18);
+	T3->setSender("Jason");
+	T3->setReceiver("Maroon");
+
+	Transaction* T4 = new Transaction(19);
+	T4->setSender("Elisabeth");
+	T4->setReceiver("Michael");
+
 	Blockchain* B = new Blockchain(T);
 	B->insertTransaction(T1);
-	// mess up the hash
-	T1->setHash("sjdlk28qeuowad3");
 	B->insertTransaction(T2);
+	B->insertTransaction(T3);
+	B->insertTransaction(T4);
 
-	B->printChain();
+	if (B->findTransaction("Elisabeth")) {
+		cout<<"Found!"<<endl;
+	} else {
+		cout<<"Not found!"<<endl;
+	}
+
 	if (B->verifyChain()) {
-		cout<<"Verified!!!"<<endl;
+		cout<<"Verified!!! Printing entire chain..."<<endl;
+		B->printChain();
 	} else {
 		cout<<"Error!"<<endl;
 	}

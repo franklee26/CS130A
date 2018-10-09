@@ -21,18 +21,24 @@ void Blockchain::insertTransaction(Transaction* node) {
 }
 
 void Blockchain::printChain() {
-	cout<<"====="<<endl;
+	cout<<"======================================================================="<<endl;
 	Transaction* copy = this->head;
 	while (copy != NULL) {
 		if (copy->isHead()) {
-			cout<<"Head!"<<endl;
+			cout<<"This is the head node."<<endl;
 		}
 		cout<<"SENDER: "<<copy->getSender()<<endl;
 		cout<<"RECEIVER: "<<copy->getReceiver()<<endl;
 		cout<<"AMOUNT: "<<copy->getAmount()<<endl;
 		cout<<"HASH: "<<copy->getSetHash()<<endl;
-		cout<<"====="<<endl;
 		copy = copy->getNext();
+		cout<<"======================================================================="<<endl;
+		if (copy != NULL) {
+			cout<<"\t\t\t\t|"<<endl;
+			cout<<"\t\t\t\t|"<<endl;
+			cout<<"\t\t\t\tV"<<endl;
+			cout<<"======================================================================="<<endl;
+		}
 	}
 }
 
@@ -44,12 +50,12 @@ bool Blockchain::verifyChain() {
 			if (copy->getSetHash() != "NULL") {
 				// now print this wrong transaction
 				cout<<"Error in the following head transaction: "<<endl;
-				cout<<"====="<<endl;
+				cout<<"======================================================================="<<endl;
 				cout<<"SENDER: "<<copy->getSender()<<endl;
 				cout<<"RECEIVER: "<<copy->getReceiver()<<endl;
 				cout<<"AMOUNT: "<<copy->getAmount()<<endl;
 				cout<<"HASH: "<<copy->getSetHash()<<endl;
-				cout<<"====="<<endl;
+				cout<<"======================================================================="<<endl;
 				return false;
 			}
 			return true;
@@ -60,17 +66,17 @@ bool Blockchain::verifyChain() {
 			string generatedPrevHash = (copy->getNext())->getHashForThis();
 			if (currentHash != generatedPrevHash) {
 				cout<<"Error between the following transaction: "<<endl;
-				cout<<"====="<<endl;
+				cout<<"======================================================================="<<endl;
 				cout<<"SENDER: "<<copy->getSender()<<endl;
 				cout<<"RECEIVER: "<<copy->getReceiver()<<endl;
 				cout<<"AMOUNT: "<<copy->getAmount()<<endl;
 				cout<<"HASH: "<<copy->getSetHash()<<endl;
-				cout<<"====="<<endl;
+				cout<<"======================================================================="<<endl;
 				cout<<"SENDER: "<<(copy->getNext())->getSender()<<endl;
 				cout<<"RECEIVER: "<<(copy->getNext())->getReceiver()<<endl;
 				cout<<"AMOUNT: "<<(copy->getNext())->getAmount()<<endl;
 				cout<<"HASH: "<<(copy->getNext())->getSetHash()<<endl;
-				cout<<"====="<<endl;
+				cout<<"======================================================================="<<endl;
 				return false;
 			}
 		}
@@ -88,15 +94,19 @@ bool Blockchain::findTransaction(string sender) {
 			found = true;
 			cout<<endl;
 			cout<<"Found transaction match: "<<endl;
-			cout<<"====="<<endl;
+			cout<<"======================================================================="<<endl;
 			cout<<"SENDER: "<<copy->getSender()<<endl;
 			cout<<"RECEIVER: "<<copy->getReceiver()<<endl;
 			cout<<"AMOUNT: "<<copy->getAmount()<<endl;
 			cout<<"HASH: "<<copy->getSetHash()<<endl;
-			cout<<"====="<<endl;
+			cout<<"======================================================================="<<endl;
 			cout<<endl;
 		}
 		copy = copy->getNext();
+	}
+	// so it's not found by now
+	if (found == false) {
+		cout<<"Sender name not found in blockchain."<<endl;
 	}
 	return found;
 }

@@ -9,15 +9,16 @@
 class Blockchain {
 public:
 	// constructor 
-	Blockchain(Transaction* head);					// takes the head of the transaction chain
+	Blockchain(Transaction* head);							// takes the head of the transaction chain
 
 	// methods
-	void insertTransaction(Transaction* node);		// inserts transaction
-	void printChain();								// prints the blockchain, despite any errors
+	void insertTransaction(Transaction* node);				// inserts transaction
+	void printChain();										// prints the blockchain, despite any errors
 
 	// getters
-	bool verifyChain();								// returns true if verified
-	bool findTransaction(std::string sender);
+	bool verifyChain();										// returns true if verified
+	bool findTransactionSender(std::string sender);
+	bool findTransactionReceiver(std::string receiver);
 private:
 	Transaction* head;
 };

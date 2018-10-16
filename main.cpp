@@ -19,7 +19,8 @@ int main() {
 		cout<<"\t| (1) Add a transaction to the chain\t\t\t|"<<endl;
 		cout<<"\t| (2) Find a transaction with the name of the sender\t|"<<endl;
 		cout<<"\t| (3) Verify and print the current chain\t\t|"<<endl;
-		cout<<"\t| (4) Exit the programme\t\t\t\t|"<<endl;
+		cout<<"\t| (4) Find a transaction with the name of the receiver\t|"<<endl;
+		cout<<"\t| (5) Exit the programme\t\t\t\t|"<<endl;
 		cout<<"\t========================================================="<<endl;
 		cout<<"Please enter an input: ";
 		cin>>input;
@@ -29,7 +30,7 @@ int main() {
 			isInt = false;
 		}
 
-		if (input < 1 || input > 4 || !cin.good() || !isInt) {
+		if (input < 1 || input > 5 || !cin.good() || !isInt) {
 			cin.clear();
 			cin.ignore(numeric_limits<streamsize>::max(), '\n');
 			//cin.ignore();
@@ -37,7 +38,7 @@ int main() {
 			continue;
 		}
 		// we have good inputs now.
-		if (input == 4) {
+		if (input == 5) {
 			cout<<"Exiting..."<<endl;
 			break;
 		}
@@ -115,7 +116,15 @@ int main() {
 			cout<<"Please enter the sender name: ";
 			cin>>senderName;
 			cout<<endl;
-			B->findTransaction(senderName);
+			B->findTransactionSender(senderName);
+		}
+
+		else if (input == 4 && usedOption1 == true) {
+			string receiverName;
+			cout<<"Please enter the receiver name: ";
+			cin>>receiverName;
+			cout<<endl;
+			B->findTransactionReceiver(receiverName);
 		}
 
 		cout<<endl;

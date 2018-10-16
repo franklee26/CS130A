@@ -86,14 +86,14 @@ bool Blockchain::verifyChain() {
 	return true;
 }	
 
-bool Blockchain::findTransaction(string sender) {
+bool Blockchain::findTransactionSender(string sender) {
 	bool found = false;
 	Transaction* copy = this->head;
 	while (copy != NULL) {
 		if (copy->getSender() == sender) {
 			found = true;
 			cout<<endl;
-			cout<<"Found transaction match: "<<endl;
+			cout<<"Found transaction match with sender "<<sender<<":"<<endl;
 			cout<<"======================================================================="<<endl;
 			cout<<"SENDER: "<<copy->getSender()<<endl;
 			cout<<"RECEIVER: "<<copy->getReceiver()<<endl;
@@ -107,6 +107,31 @@ bool Blockchain::findTransaction(string sender) {
 	// so it's not found by now
 	if (found == false) {
 		cout<<"Sender name not found in blockchain."<<endl;
+	}
+	return found;
+}
+
+bool Blockchain::findTransactionReceiver(string receiver) {
+	bool found = false;
+	Transaction* copy = this->head;
+	while (copy != NULL) {
+		if (copy->getReceiver() == receiver) {
+			found = true;
+			cout<<endl;
+			cout<<"Found transaction match with receiver "<<receiver<<":"<<endl;
+			cout<<"======================================================================="<<endl;
+			cout<<"SENDER: "<<copy->getSender()<<endl;
+			cout<<"RECEIVER: "<<copy->getReceiver()<<endl;
+			cout<<"AMOUNT: "<<copy->getAmount()<<endl;
+			cout<<"HASH: "<<copy->getSetHash()<<endl;
+			cout<<"======================================================================="<<endl;
+			cout<<endl;
+		}
+		copy = copy->getNext();
+	}
+	// so it's not found by now
+	if (found == false) {
+		cout<<"Receiver name not found in blockchain."<<endl;
 	}
 	return found;
 }

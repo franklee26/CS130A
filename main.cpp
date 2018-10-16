@@ -43,7 +43,7 @@ int main() {
 			break;
 		}
 		// notice that we can not use (2) or (3) until we use (1)
-		else if ((input == 2 || input == 3) && usedOption1 == false) {
+		else if ((input == 2 || input == 3 || input == 4) && usedOption1 == false) {
 			cerr<<"Empty chain! Please add a transaction first"<<endl;
 		}
 
